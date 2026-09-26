@@ -15,7 +15,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middlewares
+app.use(express.static('public'));
+
 app.use(cors());
 app.use(express.json());
 app.use('/api/clientes', clientesRoutes);
@@ -25,11 +26,8 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Ruta de prueba
 app.get('/', (req, res) => {
-    res.json({
-        mensaje: 'API de Floristería funcionando correctamente'
-    });
+    res.sendFile('index.html', { root: 'public' });
 });
 
 // Conexión con MongoDB Atlas
